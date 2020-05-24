@@ -1,1 +1,2 @@
-# user-registration-ui
+Run
+npm run start
