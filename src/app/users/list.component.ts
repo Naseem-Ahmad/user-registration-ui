@@ -6,14 +6,14 @@ import { AccountService } from '@app/_services';
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     users = null;
-    timeout = null;
+    interval = null;
     constructor(private accountService: AccountService) {}
 
     ngOnInit() {
         this.accountService.getCurrent()
             .pipe(first())
             .subscribe(users => this.users = users);
-            setInterval (() => {
+            this.interval= setInterval (() => {
                this.accountService.recordSession()
                 .pipe(first())
                 .subscribe();
@@ -30,5 +30,12 @@ export class ListComponent implements OnInit {
             .pipe(first())
             .subscribe(users => this.users = users);
         }
+    }
+
+    ngOnDestroy(){
+        if (this.interval) {
+            clearInterval(this.interval);
+         }
+         
     }
 }
